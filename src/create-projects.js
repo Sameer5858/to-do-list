@@ -1,8 +1,24 @@
-import { uuid } from "./create-todo";
-import { projects } from ".";
-function createProject(projectName) {
-  const array = [];
-  array[0] = { projectName, projectId: uuid() };
-  projects.push(array);
+import { uuid } from "./create-task";
+
+export function Project(name) {
+  let tasks = [];
+  const id = uuid();
+  const addTask = (task) => {
+    tasks.push(task);
+  };
+  const deleteTask = (id) => {
+    tasks.forEach((task) => {
+      if (id === task.id) {
+        const taskIndex = tasks.indexOf(task);
+        tasks.splice(taskIndex, 1);
+      }
+    });
+  };
+  return {
+    name,
+    id,
+    tasks,
+    addTask,
+    deleteTask,
+  };
 }
-export { createProject };
