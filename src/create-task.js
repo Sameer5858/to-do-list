@@ -1,17 +1,44 @@
-function Task(title, description, dueDate, priority, status) {
+export function Task(title, description, dueDate, priority, status) {
   const id = uuid();
-
+  let state = { title, description, dueDate, priority, status, id };
   return {
-    title,
-    id,
-    description,
-    dueDate,
-    priority,
-    status,
+    get title() {
+      return state.title;
+    },
+    set title(value) {
+      state.title = value;
+    },
+    get id() {
+      return state.id;
+    },
+    get description() {
+      return state.description;
+    },
+    set description(value) {
+      state.description = value;
+    },
+    get dueDate() {
+      return state.dueDate;
+    },
+    set dueDate(value) {
+      state.dueDate = value;
+    },
+    get priority() {
+      return state.priority;
+    },
+    set priority(value) {
+      state.priority = value;
+    },
+    get status() {
+      return state.status;
+    },
+    set status(value) {
+      state.status = value;
+    },
   };
 }
 
-function uuid() {
+export function uuid() {
   return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
     (
       c ^
@@ -19,4 +46,3 @@ function uuid() {
     ).toString(16)
   );
 }
-export { Task, uuid };

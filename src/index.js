@@ -1,10 +1,3 @@
-import { createTodo, Task } from "./create-task";
+import { Task } from "./create-task";
 import { Project } from "./create-projects";
 import { ToDoList } from "./to-do-list";
-const hello = ToDoList("hello");
-console.table(hello.projects);
-hello.addProject("pp");
-console.table(hello.projects);
-let id = hello.projects[0].id;
-hello.deleteProject(id);
-console.table(hello.projects);

@@ -1,24 +1,46 @@
-import { uuid } from "./create-task";
+import { uuid, Task } from "./create-task";
 
-export function Project(name) {
-  let tasks = [];
-  const id = uuid();
-  const addTask = (task) => {
-    tasks.push(task);
-  };
-  const deleteTask = (id) => {
-    tasks.forEach((task) => {
-      if (id === task.id) {
-        const taskIndex = tasks.indexOf(task);
-        tasks.splice(taskIndex, 1);
-      }
-    });
-  };
-  return {
+export function Project(name, specialId) {
+  let id;
+  if (specialId) {
+    id = specialId;
+  } else {
+    id = uuid();
+  }
+  const tasks = [];
+  let state = {
     name,
     id,
     tasks,
-    addTask,
-    deleteTask,
+  };
+
+  return {
+    get name() {
+      return state.name;
+    },
+    set name(value) {
+      state.name = value;
+    },
+    get id() {
+      return state.id;
+    },
+
+    get tasks() {
+      return state.tasks;
+    },
+    addTask(...value) {
+      state.tasks.push(Task(...value));
+    },
+    getTask(value) {
+      return state.tasks.find((task) => task.id === value);
+    },
+    deleteTask(value) {
+      state.tasks.forEach((task) => {
+        if (value === task.id) {
+          const taskIndex = state.tasks.indexOf(task);
+          state.tasks.splice(taskIndex, 1);
+        }
+      });
+    },
   };
 }

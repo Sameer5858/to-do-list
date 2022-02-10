@@ -1,23 +1,26 @@
 import { Project } from "./create-projects";
 import { Task } from "./create-task";
 
-function ToDoList() {
+export const ToDoList = (function () {
   const projects = [];
-  projects.push(new Project("Inbox"));
-  projects.push(new Project("Today"));
-  projects.push(new Project("This Week"));
-  const addProject = (name) => {
-    projects.push(new Project(`${name}`));
-  };
-  const deleteProject = (id) => {
-    projects.forEach((project) => {
-      if (id === project.id) {
-        const projectIndex = projects.indexOf(project);
-        projects.splice(projectIndex, 1);
-      }
-    });
-  };
+  projects.push(Project("Inbox", "inbox"));
+  projects.push(Project("Today", "today"));
+  projects.push(Project("This Week", "week"));
+  let state = { projects };
 
-  return { projects, addProject, deleteProject };
-}
-export { ToDoList };
+  return {
+    get projects() {
+      return [...projects];
+    },
+    addProject(value) {
+      state.projects.push(Project(value));
+    },
+    getProject(value) {
+      return state.projects.find((project) => project.id === value);
+    },
+    deleteProject(value) {
+      const indexToDelete = state.projects.indexOf(this.getProject(value));
+      state.projects.splice(indexToDelete, 1);
+    },
+  };
+})();
