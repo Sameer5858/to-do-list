@@ -17,12 +17,14 @@ header {
   align-items: center;
   gap: 10px;
   padding-left: 30px;
+  background-color: #333;
+  color: white;
 }
 header img {
   height: 50%;
 }
 nav {
-  background-color: rgb(0, 0, 0, 0.3);
+  background-color: #ddd;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -38,8 +40,9 @@ nav .project-header {
   font-size: 30px;
   padding: 20px;
 }
-nav .fixed .projects,
-nav .generated-projects .projects {
+nav .fixed .project,
+nav .generated-projects .project,
+.project.add {
   width: 100%;
   padding: 10px;
   padding-left: 20px;
@@ -51,8 +54,9 @@ nav .generated-projects .projects {
   border-radius: 5px;
   font-size: 20px;
 }
-nav .fixed .projects:hover,
-nav .generated-projects .projects:hover {
+nav .fixed .project:hover,
+nav .generated-projects .project:hover,
+.project.add:hover {
   background-color: rgb(0, 0, 0, 0.2);
 }
 
@@ -60,6 +64,7 @@ main {
   display: flex !important;
   justify-content: center;
   align-content: center;
+  background-color: #eee;
 }
 .content-container {
   flex: 1;
@@ -95,4 +100,8 @@ main .project-header {
 }
 .task .duedate {
   margin-left: auto;
+}
+.task input[type="checkbox"] {
+  margin-left: 4px;
+  margin-right: 5px;
 }

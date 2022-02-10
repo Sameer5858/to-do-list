@@ -13,20 +13,20 @@
     <header><img src="./icons/check-all.svg" alt="" /> Todo List</header>
     <nav>
       <div class="fixed">
-        <button class="projects">
-          <img src="./icons/inbox-multiple.svg" alt="" /> Inbox</button
-        ><button class="projects">
+        <button class="project">
+          <img data-id="inbox" src="./icons/inbox-multiple.svg" alt="" />
+          Inbox</button
+        ><button data-id="today" class="project">
           <img src="./icons/calendar.svg" alt="" /> Today</button
-        ><button class="projects">
+        ><button data-id="week" class="project">
           <img src="./icons/calendar-month.svg" alt="" />This Week
         </button>
       </div>
       <div class="project-header">Projects</div>
-      <div class="generated-projects">
-        <button class="projects add">
-          <img src="./icons/plus.svg" alt="" /> Add Project
-        </button>
-      </div>
+      <button class="project add">
+        <img src="./icons/plus.svg" alt="" /> Add Project
+      </button>
+      <div id="project-container" class="generated-projects"></div>
     </nav>
     <main>
       <div class="content-container">
@@ -34,20 +34,7 @@
         <button class="task add">
           <img src="./icons/plus.svg" alt="" /> Add Task
         </button>
-        <div class="generated-tasks">
-          <button class="task">
-            <input type="checkbox" name="" id="taskStatus" />
-            <div class="task-title">Title</div>
-          </button>
-          <button class="task">
-            <input type="checkbox" name="" id="taskstatus" />
-            <div class="task-title">
-              Titledsdsdsdsdsdsdhehdehgdfgegfgefgefgegfgegfggefgge
-            </div>
-            <div class="duedate">None</div>
-            <img src="./icons/close.svg" alt="" />
-          </button>
-        </div>
+        <div id="task-container" class="generated-tasks"></div>
       </div>
     </main>
   </body>

@@ -1,5 +1,4 @@
 import { Project } from "./create-projects";
-import { Task } from "./create-task";
 
 export const ToDoList = (function () {
   const projects = [];

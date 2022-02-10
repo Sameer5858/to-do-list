@@ -1,7 +1,10 @@
-export function Task(title, description, dueDate, priority, status) {
+export function Task(projectId, title, dueDate, description, priority, status) {
   const id = uuid();
-  let state = { title, description, dueDate, priority, status, id };
+  let state = { projectId, title, dueDate, description, priority, status, id };
   return {
+    get projectId() {
+      return projectId;
+    },
     get title() {
       return state.title;
     },

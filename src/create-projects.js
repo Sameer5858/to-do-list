@@ -29,7 +29,7 @@ export function Project(name, specialId) {
       return state.tasks;
     },
     addTask(...value) {
-      state.tasks.push(Task(...value));
+      state.tasks.push(Task(state.id, ...value));
     },
     getTask(value) {
       return state.tasks.find((task) => task.id === value);
