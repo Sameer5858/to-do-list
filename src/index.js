@@ -1,32 +1,54 @@
 import { ToDoList } from "./to-do-list";
 import { Project } from "./create-projects";
 import { Task } from "./create-task";
+import { add } from "date-fns";
 
 const projectNavContainer = document.getElementById("project-container");
 const taskContentContainer = document.getElementById("task-container");
 const projectHeader = document.querySelector(".project-header");
+const addTaskBtn = document.getElementById("addTask");
+const modal = document.getElementById("task");
+const overlay = document.getElementById("overlay");
+const submitAddTask = document.getElementById("taskSubmit");
+
+submitAddTask.addEventListener("click", (e) => {
+  const projectId = addTaskBtn.getAttribute("data-project-id");
+  const title = document.getElementById("title");
+  const description = document.getElementById("description");
+  const dueDate = document.getElementById("dueDate");
+  const priority = document.getElementById("priority");
+
+  if (title.value) {
+    addNewTask(
+      projectId,
+      title.value,
+      dueDate.value,
+      description.value,
+      priority.value
+    );
+    title.value = "";
+    dueDate.value = "";
+    description.value = "";
+    priority.value = "Low";
+    modal.classList.remove("active");
+    overlay.classList.remove("active");
+  }
+});
+addTaskBtn.addEventListener("click", (e) => {
+  modal.classList.add("active");
+  overlay.classList.add("active");
+  overlay.addEventListener("click", () => {
+    modal.classList.remove("active");
+    overlay.classList.remove("active");
+  });
+});
 const newTodoList = ToDoList;
 
-addNewProject("pewew232323232fkjeuhfhefugeyf");
-addNewProject(
-  "pefkje3232311111uhfhefugefefgygegyfgeffgdehfugfiueguirgergiufregifugiueiegiuieguiieugfuiegfgegyfgyefgyegyfgyefgyggyf"
-);
 addNewProject("pefkjeuhfh121ygegyfgegyf");
 addNewProject("pewew232323232fkjeuhfhefugeyf");
 addNewProject("pefkje3232311111uhfhefugefefgygegyfgegyf");
 addNewProject("pefkjeuhfh121ygegyfgegyf");
-let id = newTodoList.projects[3].id;
-addNewTask(
-  id,
-  "pppedhedgedgegdegdgedgegdgedgegdgeedfhefhehfhgfhgehgdfgefgegfgegfgefgegfgefgegfgefgegfgfgdgegdegdgegdgedgegdgedgp",
-  "dhdhd"
-);
-addNewTask(id, "pfefefefefeppp", "dhdhd");
-addNewTask(id, "ppfefefefefpp", "dhdhd");
-let id2 = newTodoList.projects[4].id;
-addNewTask(id2, "ppdsdpp", "dhdhd");
-addNewTask(id2, "psdsppp", "dhdhd");
-addNewTask(id2, "pdsdddppp", "dhdhd");
+let project = newTodoList.projects[4].id;
 
 function deleteTask(projectId, taskId) {
   const project = newTodoList.getProject(projectId);
@@ -114,6 +136,7 @@ function renderProjectNav(project) {
     const close = document.createElement("img");
     button.addEventListener("click", (e) => {
       const projectId = e.target.getAttribute("data-project-id");
+      addTaskBtn.setAttribute("data-project-id", `${project.id}`);
       loadTaskContent(projectId);
     });
     close.addEventListener("click", (e) => {

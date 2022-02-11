@@ -30,22 +30,22 @@
     </nav>
     <main>
       <div class="content-container">
-        <div class="project-header">Inbox</div>
-        <button class="task add">
+        <div data-project-id="inbox" class="project-header">Inbox</div>
+        <button data-project-id="inbox" id="addTask" class="task add">
           <img src="./icons/plus.svg" alt="" /> Add Task
         </button>
         <div id="task-container" class="generated-tasks"></div>
       </div>
     </main>
-    <div id="task" class="modal active">
-      <form action="">
+    <div id="task" class="modal">
+      <form action="" onsubmit="return false">
         <div class="head">New Task</div>
         <div>
-          <label for="title">Title</label>
-          <input type="text" name="title" id="title" />
+          <label for="title">*Title:</label>
+          <input required type="text" name="title" id="title" />
         </div>
         <div>
-          <label for="description">Description</label>
+          <label for="description">Description:</label>
           <textarea
             name="description"
             id="description"
@@ -54,20 +54,20 @@
           ></textarea>
         </div>
         <div>
-          <label for="dueDate">Due Date</label>
-          <input type="date" name="" id="" />
+          <label for="dueDate">Due Date:</label>
+          <input type="date" name="" id="dueDate" />
         </div>
         <div>
-          <label for="priority">Priority</label
+          <label for="priority">Priority:</label
           ><select name="priority" id="priority">
-            <option value="High">High</option>
-            <option value="Medium">Medium</option>
             <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
           </select>
         </div>
-        <button id="taskSubmit">Submit</button>
+        <button type="submit" id="taskSubmit">Submit</button>
       </form>
     </div>
-    <div id="overlay" class="active"></div>
+    <div id="overlay"></div>
   </body>
 </html>

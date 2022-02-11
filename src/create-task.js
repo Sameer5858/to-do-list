@@ -1,6 +1,14 @@
 export function Task(projectId, title, dueDate, description, priority, status) {
   const id = uuid();
-  let state = { projectId, title, dueDate, description, priority, status, id };
+  let state = {
+    projectId,
+    title,
+    dueDate,
+    description,
+    priority,
+    status,
+    id,
+  };
   return {
     get projectId() {
       return projectId;
