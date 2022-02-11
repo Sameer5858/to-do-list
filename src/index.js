@@ -4,23 +4,35 @@ import { Task } from "./create-task";
 
 const projectNavContainer = document.getElementById("project-container");
 const taskContentContainer = document.getElementById("task-container");
+const projectHeader = document.querySelector(".project-header");
 const newTodoList = ToDoList;
 
 addNewProject("pewew232323232fkjeuhfhefugeyf");
-addNewProject("pefkje3232311111uhfhefugefefgygegyfgegyf");
+addNewProject(
+  "pefkje3232311111uhfhefugefefgygegyfgeffgdehfugfiueguirgergiufregifugiueiegiuieguiieugfuiegfgegyfgyefgyegyfgyefgyggyf"
+);
 addNewProject("pefkjeuhfh121ygegyfgegyf");
 addNewProject("pewew232323232fkjeuhfhefugeyf");
 addNewProject("pefkje3232311111uhfhefugefefgygegyfgegyf");
 addNewProject("pefkjeuhfh121ygegyfgegyf");
 let id = newTodoList.projects[3].id;
-addNewTask(id, "pppp", "dhdhd");
-addNewTask(id, "pppp", "dhdhd");
-addNewTask(id, "pppp", "dhdhd");
+addNewTask(
+  id,
+  "pppedhedgedgegdegdgedgegdgedgegdgeedfhefhehfhgfhgehgdfgefgegfgegfgefgegfgefgegfgefgegfgfgdgegdegdgegdgedgegdgedgp",
+  "dhdhd"
+);
+addNewTask(id, "pfefefefefeppp", "dhdhd");
+addNewTask(id, "ppfefefefefpp", "dhdhd");
 let id2 = newTodoList.projects[4].id;
 addNewTask(id2, "ppdsdpp", "dhdhd");
 addNewTask(id2, "psdsppp", "dhdhd");
 addNewTask(id2, "pdsdddppp", "dhdhd");
 
+function deleteTask(projectId, taskId) {
+  const project = newTodoList.getProject(projectId);
+  project.deleteTask(taskId);
+  loadTaskContent(projectId);
+}
 function deleteProject(projectId) {
   newTodoList.deleteProject(projectId);
   projectNavContainer.innerHTML = "";
@@ -37,6 +49,7 @@ function loadTaskContent(projectId) {
   if (!project) {
     return;
   }
+  projectHeader.textContent = `${project.name}`;
   const tasks = project.tasks;
   taskContentContainer.innerHTML = "";
   tasks.forEach((task) => {
@@ -48,18 +61,22 @@ function renderTaskContent(task) {
   const titleDiv = document.createElement("div");
   const dateDiv = document.createElement("div");
   const close = document.createElement("img");
+  close.addEventListener("click", (e) => {
+    const projectId = e.target.getAttribute("data-project-id");
+    const taskId = e.target.getAttribute("data-task-id");
+    deleteTask(projectId, taskId);
+  });
   const checkbox = document.createElement("input");
   close.setAttribute("id", "close");
-  close.addEventListener("click", () => console.log("hello"));
-  button.setAttribute("date-task-id", `${task.id}`);
-  titleDiv.setAttribute("date-task-id", `${task.id}`);
-  dateDiv.setAttribute("date-task-id", `${task.id}`);
-  close.setAttribute("date-task-id", `${task.id}`);
-  checkbox.setAttribute("date-task-id", `${task.id}`);
-  button.setAttribute("date-project-id", `${task.projectId}`);
-  titleDiv.setAttribute("date-project-id", `${task.projectId}`);
-  dateDiv.setAttribute("date-project-id", `${task.projectId}`);
-  close.setAttribute("date-project-id", `${task.projectId}`);
+  button.setAttribute("data-task-id", `${task.id}`);
+  titleDiv.setAttribute("data-task-id", `${task.id}`);
+  dateDiv.setAttribute("data-task-id", `${task.id}`);
+  close.setAttribute("data-task-id", `${task.id}`);
+  checkbox.setAttribute("data-task-id", `${task.id}`);
+  button.setAttribute("data-project-id", `${task.projectId}`);
+  titleDiv.setAttribute("data-project-id", `${task.projectId}`);
+  dateDiv.setAttribute("data-project-id", `${task.projectId}`);
+  close.setAttribute("data-project-id", `${task.projectId}`);
   checkbox.setAttribute("date-project-id", `${task.projectId}`);
   button.classList.add("task");
   titleDiv.classList.add("task-title");

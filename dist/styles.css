@@ -36,7 +36,7 @@ nav .generated-projects {
   align-items: center;
 }
 
-nav .project-header {
+nav .project-head {
   font-size: 30px;
   padding: 20px;
 }
@@ -67,7 +67,8 @@ nav .generated-projects:hover #close {
 }
 nav .fixed .project:hover,
 nav .generated-projects .project:hover,
-.project.add:hover {
+.project.add:hover,
+button.task:hover {
   background-color: rgb(0, 0, 0, 0.2);
 }
 
@@ -76,38 +77,48 @@ main {
   justify-content: center;
   align-content: center;
   background-color: #eee;
+  max-width: calc(100vw - 250px);
 }
 .content-container {
   flex: 1;
-  max-width: 80%;
+  max-width: calc(100vw - 250px);
 }
 main .project-header {
   font-size: 30px;
   padding: 20px 40px;
   font-weight: bold;
+  overflow: hidden;
 }
 .generated-tasks {
+  margin: 10px;
   display: flex;
   flex-direction: column;
+  margin: 0 40px;
+}
+.add.task {
+  margin-left: 40px;
+
+  max-width: 50%;
 }
 .task {
   display: grid;
   justify-items: start;
-  padding-left: 40px;
   gap: 20px;
-  width: 100%;
   padding: 10px;
-  padding-left: 40px;
+  width: 100%;
   display: flex;
   gap: 10px;
   align-items: center;
   background: none;
   border: none;
   border-radius: 5px;
-  font-size: 20px;
+  font-size: 24px;
 }
 .task-title {
   overflow: hidden;
+}
+.task-title:hover {
+  text-decoration: underline;
 }
 .task .duedate {
   margin-left: auto;
@@ -115,4 +126,60 @@ main .project-header {
 .task input[type="checkbox"] {
   margin-left: 4px;
   margin-right: 5px;
+}
+#overlay {
+  position: fixed;
+  transition: 200ms ease-in-out;
+  opacity: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+}
+#overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: 200ms ease-in-out;
+  border: 1px solid black;
+  z-index: 10;
+  background-color: rgb(200, 199, 199);
+  width: 400px;
+  height: 600px;
+
+  border-radius: 10px;
+}
+.modal#task {
+}
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 100%;
+  max-height: 100%;
+}
+form * {
+  display: flex;
+  flex-direction: column;
+
+  padding: 5px;
+  max-width: 80%;
+}
+form label {
+  font-size: 24px;
+}
+form .head {
+  font-size: 36px;
+  text-decoration: underline;
+  margin: 20px;
+}
+.modal.active {
+  transform: translate(-50%, -50%) scale(1);
 }
