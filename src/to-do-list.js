@@ -1,15 +1,14 @@
 import { Project } from "./create-projects";
 
 export const ToDoList = (function () {
-  const projects = [];
-  projects.push(Project("Inbox", "inbox"));
-  projects.push(Project("Today", "today"));
-  projects.push(Project("This Week", "week"));
-  let state = { projects };
+  let state = { projects: [] };
+  state.projects.push(Project("Inbox", "inbox"));
+  state.projects.push(Project("Today", "today"));
+  state.projects.push(Project("This Week", "week"));
 
   return {
     get projects() {
-      return [...projects];
+      return [...state.projects];
     },
     addProject(value) {
       state.projects.push(Project(value));

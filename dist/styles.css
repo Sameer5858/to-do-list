@@ -54,6 +54,17 @@ nav .generated-projects .project,
   border-radius: 5px;
   font-size: 20px;
 }
+.text {
+  overflow: hidden;
+  white-space: nowrap;
+}
+nav .generated-projects #close {
+  display: none;
+  margin-left: auto;
+}
+nav .generated-projects:hover #close {
+  display: block;
+}
 nav .fixed .project:hover,
 nav .generated-projects .project:hover,
 .project.add:hover {

@@ -7,11 +7,11 @@ export function Project(name, specialId) {
   } else {
     id = uuid();
   }
-  const tasks = [];
+
   let state = {
     name,
     id,
-    tasks,
+    tasks: [],
   };
 
   return {
@@ -35,12 +35,8 @@ export function Project(name, specialId) {
       return state.tasks.find((task) => task.id === value);
     },
     deleteTask(value) {
-      state.tasks.forEach((task) => {
-        if (value === task.id) {
-          const taskIndex = state.tasks.indexOf(task);
-          state.tasks.splice(taskIndex, 1);
-        }
-      });
+      const indexToDelete = state.tasks.indexOf(this.getTask(value));
+      state.tasks.splice(indexToDelete, 1);
     },
   };
 }
