@@ -15,6 +15,14 @@ const modalTitle = document.getElementById("title");
 const modalDescription = document.getElementById("description");
 const modalDueDate = document.getElementById("dueDate");
 const modalPriority = document.getElementById("priority");
+const fixedBtns = document.querySelectorAll(".fixedBtns");
+fixedBtns.forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+    const projectId = e.target.getAttribute("data-project-id");
+    addTaskBtn.setAttribute("data-project-id", `${projectId}`);
+    loadTaskContent(projectId);
+  });
+});
 modalSubmitAddTask.addEventListener("click", (e) => {
   const projectId = addTaskBtn.getAttribute("data-project-id");
 
@@ -198,7 +206,7 @@ function renderProjectNav(project) {
     const close = document.createElement("img");
     button.addEventListener("click", (e) => {
       const projectId = e.target.getAttribute("data-project-id");
-      addTaskBtn.setAttribute("data-project-id", `${project.id}`);
+      addTaskBtn.setAttribute("data-project-id", `${projectId}`);
       loadTaskContent(projectId);
     });
     close.addEventListener("click", (e) => {

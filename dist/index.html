@@ -13,12 +13,16 @@
     <header><img src="./icons/check-all.svg" alt="" /> Todo List</header>
     <nav>
       <div class="fixed">
-        <button class="project">
-          <img data-id="inbox" src="./icons/inbox-multiple.svg" alt="" />
-          Inbox</button
-        ><button data-id="today" class="project">
-          <img src="./icons/calendar.svg" alt="" /> Today</button
-        ><button data-id="week" class="project">
+        <button data-project-id="inbox" class="project fixedBtns">
+          <img
+            data-project-id="inbox"
+            src="./icons/inbox-multiple.svg"
+            alt=""
+          />Inbox</button
+        ><button data-project-id="today" class="project fixedBtns">
+          <img src="./icons/calendar.svg" alt="" /> Today
+        </button>
+        <button data-project-id="week" class="project fixedBtns">
           <img src="./icons/calendar-month.svg" alt="" />This Week
         </button>
       </div>
