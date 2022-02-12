@@ -46,6 +46,12 @@ export function Task(projectId, title, dueDate, description, priority, status) {
     set status(value) {
       state.status = value;
     },
+    get getDateFormatted() {
+      const day = state.dueDate.split("-")[2];
+      const month = state.dueDate.split("-")[1];
+      const year = state.dueDate.split("-")[0];
+      return `${month}/${day}/${year}`;
+    },
   };
 }
 

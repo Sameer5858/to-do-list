@@ -9,46 +9,74 @@ const projectHeader = document.querySelector(".project-header");
 const addTaskBtn = document.getElementById("addTask");
 const modal = document.getElementById("task");
 const overlay = document.getElementById("overlay");
-const submitAddTask = document.getElementById("taskSubmit");
-
-submitAddTask.addEventListener("click", (e) => {
+const modalSubmitAddTask = document.getElementById("taskSubmit");
+const editSubmitTask = document.getElementById("editSubmitTask");
+const modalTitle = document.getElementById("title");
+const modalDescription = document.getElementById("description");
+const modalDueDate = document.getElementById("dueDate");
+const modalPriority = document.getElementById("priority");
+modalSubmitAddTask.addEventListener("click", (e) => {
   const projectId = addTaskBtn.getAttribute("data-project-id");
-  const title = document.getElementById("title");
-  const description = document.getElementById("description");
-  const dueDate = document.getElementById("dueDate");
-  const priority = document.getElementById("priority");
 
-  if (title.value) {
+  if (modalTitle.value) {
+    console.log(dueDate.value);
     addNewTask(
       projectId,
-      title.value,
-      dueDate.value,
-      description.value,
-      priority.value
+      modalTitle.value,
+      modalDueDate.value,
+      modalDescription.value,
+      modalPriority.value
     );
-    title.value = "";
-    dueDate.value = "";
-    description.value = "";
-    priority.value = "Low";
-    modal.classList.remove("active");
-    overlay.classList.remove("active");
+
+    modalClose();
   }
 });
 addTaskBtn.addEventListener("click", (e) => {
+  modalOpen();
+});
+overlay.addEventListener("click", () => {
+  modalClose();
+  modalSubmitAddTask.style.display = "block";
+  editSubmitTask.style.display = "none";
+});
+function modalOpen() {
   modal.classList.add("active");
   overlay.classList.add("active");
-  overlay.addEventListener("click", () => {
-    modal.classList.remove("active");
-    overlay.classList.remove("active");
-  });
-});
+}
+function modalClose() {
+  modal.classList.remove("active");
+  overlay.classList.remove("active");
+  modalTitle.value = "";
+  modalDueDate.value = "";
+  modalDescription.value = "";
+  modalPriority.value = "Low";
+  modalEditOn();
+}
+function modalEditOn() {
+  modalTitle.disabled = false;
+  modalDescription.disabled = false;
+  modalDueDate.disabled = false;
+  modalPriority.disabled = false;
+  modalSubmitAddTask.disabled = false;
+}
+function modalEditOff() {
+  modalTitle.disabled = true;
+  modalDescription.disabled = true;
+  modalDueDate.disabled = true;
+  modalPriority.disabled = true;
+  modalSubmitAddTask.disabled = true;
+}
 const newTodoList = ToDoList;
 
 addNewProject("pefkjeuhfh121ygegyfgegyf");
 addNewProject("pewew232323232fkjeuhfhefugeyf");
 addNewProject("pefkje3232311111uhfhefugefefgygegyfgegyf");
 addNewProject("pefkjeuhfh121ygegyfgegyf");
-let project = newTodoList.projects[4].id;
+addNewTask("inbox", "ppp", "2022-02-12");
+addNewTask("inbox", "ppp", "2022-02-12");
+addNewTask("inbox", "ppp", "2022-02-12");
+addNewTask("inbox", "ppp", "2022-01-12");
+console.log(newTodoList.weekTask());
 
 function deleteTask(projectId, taskId) {
   const project = newTodoList.getProject(projectId);
@@ -81,6 +109,39 @@ function loadTaskContent(projectId) {
 function renderTaskContent(task) {
   const button = document.createElement("button");
   const titleDiv = document.createElement("div");
+  titleDiv.addEventListener("click", () => {
+    const projectId = titleDiv.getAttribute("data-project-id");
+    const taskId = titleDiv.getAttribute("data-task-id");
+    const project = newTodoList.getProject(projectId);
+    const task = project.getTask(taskId);
+    const edit = document.getElementById("edit");
+    edit.addEventListener("click", () => {
+      modalEditOn();
+      modalSubmitAddTask.style.display = "none";
+      editSubmitTask.style.display = "block";
+      editSubmitTask.addEventListener("click", () => {
+        if (modalTitle.value) {
+          project.deleteTask(taskId);
+          addNewTask(
+            projectId,
+            modalTitle.value,
+            modalDueDate.value,
+            modalDescription.value,
+            modalPriority.value
+          );
+
+          modalClose();
+        }
+      });
+    });
+    modalTitle.value = task.title;
+    modalDescription.value = task.description;
+    modalDueDate.value = task.dueDate;
+    modalPriority.value = task.priority;
+    modalEditOff();
+    modalOpen();
+  });
+
   const dateDiv = document.createElement("div");
   const close = document.createElement("img");
   close.addEventListener("click", (e) => {

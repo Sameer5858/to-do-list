@@ -1,4 +1,6 @@
 import { uuid, Task } from "./create-task";
+import isThisWeek from "date-fns/isThisWeek";
+import subDays from "date-fns/subDays";
 
 export function Project(name, specialId) {
   let id;
@@ -37,6 +39,12 @@ export function Project(name, specialId) {
     deleteTask(value) {
       const indexToDelete = state.tasks.indexOf(this.getTask(value));
       state.tasks.splice(indexToDelete, 1);
+    },
+    get getTasksThisWeek() {
+      return state.tasks.filter((task) => {
+        const taskDate = new Date(task.getDateFormatted);
+        return isThisWeek(subDays(taskDate, 1));
+      });
     },
   };
 }
