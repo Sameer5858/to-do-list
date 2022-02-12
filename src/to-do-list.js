@@ -1,5 +1,4 @@
 import { Project } from "./create-projects";
-import isThisWeek from "date-fns/isThisWeek";
 
 export const ToDoList = (function () {
   let state = { projects: [] };

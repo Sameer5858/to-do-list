@@ -1,4 +1,20 @@
-import { addNewTask, modalClose, modalOpen, loadTaskContent } from "./ui";
+import { ToDoList } from "./to-do-list";
+import {
+  addNewProject,
+  addNewTask,
+  modalClose,
+  modalOpen,
+  loadTaskContent,
+  loadProjectNav,
+} from "./ui";
+export let toDoList = ToDoList;
+if (localStorage.getItem("toDoList")) {
+  let stringify = localStorage.getItem("toDoList");
+  let parse = JSON.parse(stringify);
+  let toDoList = Object.assign(parse, ToDoList);
+} else {
+  toDoList = ToDoList;
+}
 
 const addTaskBtn = document.getElementById("addTask");
 const addProjectButton = document.getElementById("addProject");

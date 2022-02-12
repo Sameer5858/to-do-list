@@ -1,5 +1,5 @@
-import { ToDoList } from "./to-do-list";
-
+import { UpdateStorage } from "./storage";
+import { toDoList } from ".";
 const projectNavContainer = document.getElementById("project-container");
 const taskContentContainer = document.getElementById("task-container");
 const projectHeader = document.querySelector(".project-header");
@@ -43,30 +43,32 @@ function modalEditOff() {
   modalPriority.disabled = true;
   modalSubmitAddTask.disabled = true;
 }
-const newTodoList = ToDoList;
 
 function deleteTask(projectId, taskId) {
-  const project = newTodoList.getProject(projectId);
+  const project = toDoList.getProject(projectId);
   project.deleteTask(taskId);
-  newTodoList.weekTask();
-  newTodoList.todayTask();
+  toDoList.weekTask();
+  toDoList.todayTask();
   loadTaskContent(projectId);
+  UpdateStorage();
 }
 function deleteProject(projectId) {
-  newTodoList.deleteProject(projectId);
+  toDoList.deleteProject(projectId);
   projectNavContainer.innerHTML = "";
   loadProjectsNav();
+  UpdateStorage();
 }
 function addNewTask(projectId, ...details) {
   taskContentContainer.innerHTML = "";
-  const project = newTodoList.getProject(projectId);
+  const project = toDoList.getProject(projectId);
   project.addTask(...details);
-  newTodoList.weekTask();
-  newTodoList.todayTask();
+  toDoList.weekTask();
+  toDoList.todayTask();
   loadTaskContent(projectId);
+  UpdateStorage();
 }
 function loadTaskContent(projectId) {
-  const project = newTodoList.getProject(projectId);
+  const project = toDoList.getProject(projectId);
   if (!project) {
     return;
   }
@@ -83,7 +85,7 @@ function renderTaskContent(task) {
   titleDiv.addEventListener("click", () => {
     const projectId = titleDiv.getAttribute("data-project-id");
     const taskId = titleDiv.getAttribute("data-task-id");
-    const project = newTodoList.getProject(projectId);
+    const project = toDoList.getProject(projectId);
     const task = project.getTask(taskId);
     const edit = document.getElementById("edit");
     edit.addEventListener("click", () => {
@@ -125,11 +127,9 @@ function renderTaskContent(task) {
     if (checkbox.checked) {
       titleDiv.classList.add("done");
       task.status = true;
-      console.log(task);
     } else {
       titleDiv.classList.remove("done");
       task.status = false;
-      console.log(task);
     }
   });
   close.setAttribute("id", "close");
@@ -163,11 +163,12 @@ function renderTaskContent(task) {
 
 function addNewProject(name) {
   projectNavContainer.innerHTML = "";
-  newTodoList.addProject(name);
+  toDoList.addProject(name);
   loadProjectsNav();
+  UpdateStorage();
 }
 function loadProjectsNav() {
-  newTodoList.projects.forEach((project) => {
+  toDoList.projects.forEach((project) => {
     renderProjectNav(project);
   });
 }
@@ -187,7 +188,7 @@ function renderProjectNav(project) {
     });
     button.addEventListener("click", (e) => {
       const projectId = e.target.getAttribute("data-project-id");
-      if (newTodoList.getProject(projectId)) {
+      if (toDoList.getProject(projectId)) {
         addTaskBtn.setAttribute("data-project-id", projectId);
         loadTaskContent(projectId);
         newProject.classList.remove("active");
@@ -210,4 +211,11 @@ function renderProjectNav(project) {
     projectNavContainer.appendChild(button);
   }
 }
-export { addNewTask, modalOpen, modalClose, loadTaskContent };
+export {
+  loadProjectsNav,
+  addNewProject,
+  addNewTask,
+  modalOpen,
+  modalClose,
+  loadTaskContent,
+};

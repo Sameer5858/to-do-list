@@ -9,6 +9,7 @@ export function Task(projectId, title, dueDate, description, priority, status) {
     status,
     id,
   };
+
   return {
     get projectId() {
       return projectId;
