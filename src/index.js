@@ -7,19 +7,26 @@ const projectNavContainer = document.getElementById("project-container");
 const taskContentContainer = document.getElementById("task-container");
 const projectHeader = document.querySelector(".project-header");
 const addTaskBtn = document.getElementById("addTask");
+const addProjectButton = document.getElementById("addProject");
 const modal = document.getElementById("task");
 const overlay = document.getElementById("overlay");
 const modalSubmitAddTask = document.getElementById("taskSubmit");
+const modalCancelTask = document.getElementById("cancelTask");
 const editSubmitTask = document.getElementById("editSubmitTask");
 const modalTitle = document.getElementById("title");
 const modalDescription = document.getElementById("description");
 const modalDueDate = document.getElementById("dueDate");
 const modalPriority = document.getElementById("priority");
-const fixedBtns = document.querySelectorAll(".fixedBtns");
-fixedBtns.forEach((btn) => {
+const fixedProjectButtons = document.querySelectorAll(".fixedBtns");
+modalCancelTask.addEventListener("click", () => {
+  modalClose();
+  modalSubmitAddTask.style.display = "block";
+  editSubmitTask.style.display = "none";
+});
+fixedProjectButtons.forEach((btn) => {
   btn.addEventListener("click", (e) => {
     const projectId = e.target.getAttribute("data-project-id");
-    addTaskBtn.setAttribute("data-project-id", `${projectId}`);
+    addTaskBtn.setAttribute("data-project-id", projectId);
     loadTaskContent(projectId);
   });
 });
@@ -159,6 +166,17 @@ function renderTaskContent(task) {
     deleteTask(projectId, taskId);
   });
   const checkbox = document.createElement("input");
+  checkbox.addEventListener("click", () => {
+    if (checkbox.checked) {
+      titleDiv.classList.add("done");
+      task.status = true;
+      console.log(task);
+    } else {
+      titleDiv.classList.remove("done");
+      task.status = false;
+      console.log(task);
+    }
+  });
   close.setAttribute("id", "close");
   button.setAttribute("data-task-id", `${task.id}`);
   titleDiv.setAttribute("data-task-id", `${task.id}`);
@@ -173,6 +191,9 @@ function renderTaskContent(task) {
   button.classList.add("task");
   titleDiv.classList.add("task-title");
   titleDiv.textContent = `${task.title}`;
+  if (task.status) {
+    titleDiv.classList.add("done");
+  }
   dateDiv.textContent = `${task.dueDate}`;
   dateDiv.classList.add("duedate");
   close.src = "./icons/close.svg";
@@ -189,7 +210,6 @@ function addNewProject(name) {
   projectNavContainer.innerHTML = "";
   newTodoList.addProject(name);
   loadProjectsNav();
-  loadTaskContent("inbox");
 }
 function loadProjectsNav() {
   newTodoList.projects.forEach((project) => {
@@ -204,15 +224,20 @@ function renderProjectNav(project) {
     const text = document.createElement("div");
     const img = document.createElement("img");
     const close = document.createElement("img");
-    button.addEventListener("click", (e) => {
-      const projectId = e.target.getAttribute("data-project-id");
-      addTaskBtn.setAttribute("data-project-id", `${projectId}`);
-      loadTaskContent(projectId);
-    });
     close.addEventListener("click", (e) => {
       const projectId = e.target.getAttribute("data-project-id");
       deleteProject(projectId);
+      loadTaskContent("inbox");
+      addTaskBtn.setAttribute("data-project-id", "inbox");
     });
+    button.addEventListener("click", (e) => {
+      const projectId = e.target.getAttribute("data-project-id");
+      if (newTodoList.getProject(projectId)) {
+        addTaskBtn.setAttribute("data-project-id", projectId);
+        loadTaskContent(projectId);
+      }
+    });
+
     button.classList.add("project");
     img.src = "./icons/calendar-multiple-check.svg";
     close.src = "./icons/close.svg";
