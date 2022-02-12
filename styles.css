@@ -150,11 +150,13 @@ main .project-header {
   transition: 200ms ease-in-out;
   border: 1px solid black;
   z-index: 10;
-  background-color: rgb(200, 199, 199);
+  background-color: steelblue;
   width: 400px;
   height: 450px;
-
   border-radius: 10px;
+}
+.modal.active {
+  transform: translate(-50%, -50%) scale(1);
 }
 
 form {
@@ -164,6 +166,23 @@ form {
   padding: 20px;
   max-width: 100%;
   max-height: 100%;
+}
+#taskSubmit,
+#editSubmitTask {
+  background-color: #06b600f3;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: 24px;
+  align-self: center;
+  margin-top: 20px;
+}
+#editSubmitTask {
+  display: none;
+}
+#taskSubmit:hover,
+#editSubmitTask:hover {
+  filter: brightness(90%);
 }
 form div {
   display: flex;
@@ -177,11 +196,7 @@ textarea {
   height: 100px;
   resize: none;
 }
-form #taskSubmit {
-  font-size: 24px;
-  align-self: center;
-  margin-top: 20px;
-}
+
 form label {
   font-size: 24px;
 }
@@ -189,6 +204,6 @@ form .head {
   font-size: 36px;
   font-weight: bold;
 }
-.modal.active {
-  transform: translate(-50%, -50%) scale(1);
+.head img:hover {
+  opacity: 0.5;
 }
