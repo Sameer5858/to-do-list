@@ -22,8 +22,24 @@ export const ToDoList = (function () {
       state.projects.splice(indexToDelete, 1);
     },
     weekTask() {
+      state.projects[2].tasks = [];
       state.projects.forEach((project) => {
-        console.log(project.getTasksThisWeek);
+        if (project.id === "today" || project.id === "week") {
+          return;
+        } else {
+          const weekTasks = project.getThisWeekTasks();
+          weekTasks.forEach((task) => {
+            state.projects[2].tasks.push(task);
+          });
+        }
+      });
+    },
+    todayTask() {
+      state.projects[1].tasks = [];
+      const todayTasks = state.projects[2].getTodayTasks();
+
+      todayTasks.forEach((task) => {
+        state.projects[1].tasks.push(task);
       });
     },
   };

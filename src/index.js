@@ -19,7 +19,6 @@ modalSubmitAddTask.addEventListener("click", (e) => {
   const projectId = addTaskBtn.getAttribute("data-project-id");
 
   if (modalTitle.value) {
-    console.log(dueDate.value);
     addNewTask(
       projectId,
       modalTitle.value,
@@ -50,6 +49,8 @@ function modalClose() {
   modalDueDate.value = "";
   modalDescription.value = "";
   modalPriority.value = "Low";
+  modalSubmitAddTask.style.display = "block";
+  editSubmitTask.style.display = "none";
   modalEditOn();
 }
 function modalEditOn() {
@@ -72,15 +73,13 @@ addNewProject("pefkjeuhfh121ygegyfgegyf");
 addNewProject("pewew232323232fkjeuhfhefugeyf");
 addNewProject("pefkje3232311111uhfhefugefefgygegyfgegyf");
 addNewProject("pefkjeuhfh121ygegyfgegyf");
-addNewTask("inbox", "ppp", "2022-02-12");
-addNewTask("inbox", "ppp", "2022-02-12");
-addNewTask("inbox", "ppp", "2022-02-12");
-addNewTask("inbox", "ppp", "2022-01-12");
-console.log(newTodoList.weekTask());
+let id = newTodoList.projects[4].id;
 
 function deleteTask(projectId, taskId) {
   const project = newTodoList.getProject(projectId);
   project.deleteTask(taskId);
+  newTodoList.weekTask();
+  newTodoList.todayTask();
   loadTaskContent(projectId);
 }
 function deleteProject(projectId) {
@@ -92,6 +91,8 @@ function addNewTask(projectId, ...details) {
   taskContentContainer.innerHTML = "";
   const project = newTodoList.getProject(projectId);
   project.addTask(...details);
+  newTodoList.weekTask();
+  newTodoList.todayTask();
   loadTaskContent(projectId);
 }
 function loadTaskContent(projectId) {

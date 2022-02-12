@@ -1,5 +1,6 @@
 import { uuid, Task } from "./create-task";
 import isThisWeek from "date-fns/isThisWeek";
+import isToday from "date-fns/isToday";
 import subDays from "date-fns/subDays";
 
 export function Project(name, specialId) {
@@ -30,6 +31,9 @@ export function Project(name, specialId) {
     get tasks() {
       return state.tasks;
     },
+    set tasks(value) {
+      state.tasks = value;
+    },
     addTask(...value) {
       state.tasks.push(Task(state.id, ...value));
     },
@@ -40,10 +44,16 @@ export function Project(name, specialId) {
       const indexToDelete = state.tasks.indexOf(this.getTask(value));
       state.tasks.splice(indexToDelete, 1);
     },
-    get getTasksThisWeek() {
+    getThisWeekTasks() {
       return state.tasks.filter((task) => {
         const taskDate = new Date(task.getDateFormatted);
         return isThisWeek(subDays(taskDate, 1));
+      });
+    },
+    getTodayTasks() {
+      return state.tasks.filter((task) => {
+        const taskDate = new Date(task.getDateFormatted);
+        return isToday(taskDate);
       });
     },
   };
