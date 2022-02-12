@@ -71,7 +71,9 @@ nav .generated-projects .project:hover,
 button.task:hover {
   background-color: rgb(0, 0, 0, 0.2);
 }
-
+.project:focus:not(.add) {
+  background-color: rgb(0, 0, 0, 0.2);
+}
 main {
   display: flex !important;
   justify-content: center;
@@ -116,6 +118,9 @@ main .project-header {
 }
 .task-title {
   overflow: hidden;
+}
+.task-title.done {
+  text-decoration: line-through;
 }
 .task-title:hover {
   text-decoration: underline;
@@ -168,22 +173,39 @@ form {
   max-height: 100%;
 }
 #taskSubmit,
-#editSubmitTask {
-  background-color: #06b600f3;
-  border: none;
+#editSubmitTask,
+#cancelTask {
+  background-color: #36e730f3;
+  border: 1px solid black;
   border-radius: 5px;
   padding: 5px 10px;
   font-size: 24px;
   align-self: center;
   margin-top: 20px;
+  font-weight: bold;
 }
 #editSubmitTask {
   display: none;
+  padding: 5px 25px;
 }
 #taskSubmit:hover,
-#editSubmitTask:hover {
+#editSubmitTask:hover,
+#cancelTask:hover {
   filter: brightness(90%);
 }
+#addTask[data-project-id="week"],
+#addTask[data-project-id="today"] {
+  display: none;
+}
+#cancelTask {
+  background-color: rgb(255, 95, 95);
+}
+.buttons {
+  display: flex;
+  align-self: center;
+  gap: 30px;
+}
+
 form div {
   display: flex;
   padding: 5px;

@@ -27,7 +27,7 @@
         </button>
       </div>
       <div class="project-head">Projects</div>
-      <button class="project add">
+      <button id="addProject" class="project add">
         <img src="./icons/plus.svg" alt="" /> Add Project
       </button>
       <div id="project-container" class="generated-projects"></div>
@@ -71,8 +71,11 @@
             <option value="High">High</option>
           </select>
         </div>
-        <button type="submit" id="taskSubmit">Submit</button>
-        <button type="submit" id="editSubmitTask">Edit</button>
+        <div class="buttons">
+          <button type="submit" id="taskSubmit">Submit</button>
+          <button type="submit" id="editSubmitTask">Edit</button>
+          <button type="button" id="cancelTask">Cancel</button>
+        </div>
       </form>
     </div>
     <div id="overlay"></div>
