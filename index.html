@@ -27,9 +27,22 @@
         </button>
       </div>
       <div class="project-head">Projects</div>
+      <div id="newProject" class="addProject projects">
+        <input
+          id="projectTitle"
+          required
+          placeholder="Project Title"
+          type="text"
+        />
+        <div class="projectBtns">
+          <button type="submit" id="projectSubmit">Submit</button
+          ><button type="button" id="cancelProject">Cancel</button>
+        </div>
+      </div>
       <button id="addProject" class="project add">
         <img src="./icons/plus.svg" alt="" /> Add Project
       </button>
+
       <div id="project-container" class="generated-projects"></div>
     </nav>
     <main>
