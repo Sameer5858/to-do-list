@@ -54,6 +54,7 @@ nav .generated-projects .project,
   border-radius: 5px;
   font-size: 20px;
 }
+
 .text {
   overflow: hidden;
   white-space: nowrap;
@@ -73,6 +74,29 @@ button.task:hover {
 }
 .project:focus:not(.add) {
   background-color: rgb(0, 0, 0, 0.2);
+}
+.generated-projects .project img:last-child {
+  margin-left: auto;
+}
+.addProject #projectTitle {
+  width: 180px;
+  height: 30px;
+  margin: 0 10px 10px 10px;
+  border: 1px solid black;
+  border-radius: 2px;
+  font-size: 24px;
+}
+.addProject {
+  display: none;
+  margin-bottom: 20px;
+}
+.addProject.active {
+  display: block;
+}
+.projectBtns {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
 }
 main {
   display: flex !important;
@@ -99,7 +123,6 @@ main .project-header {
 }
 .add.task {
   margin-left: 40px;
-
   max-width: 50%;
 }
 .task {
@@ -174,7 +197,9 @@ form {
 }
 #taskSubmit,
 #editSubmitTask,
-#cancelTask {
+#cancelTask,
+#projectSubmit,
+#cancelProject {
   background-color: #36e730f3;
   border: 1px solid black;
   border-radius: 5px;
@@ -184,20 +209,29 @@ form {
   margin-top: 20px;
   font-weight: bold;
 }
+
+#projectSubmit,
+#cancelProject {
+  margin-top: 0px;
+  width: 90px;
+  font-size: 18px;
+}
 #editSubmitTask {
   display: none;
   padding: 5px 25px;
 }
 #taskSubmit:hover,
 #editSubmitTask:hover,
-#cancelTask:hover {
+#cancelTask:hover,
+#projectSubmit:hover {
   filter: brightness(90%);
 }
 #addTask[data-project-id="week"],
 #addTask[data-project-id="today"] {
   display: none;
 }
-#cancelTask {
+#cancelTask,
+#cancelProject {
   background-color: rgb(255, 95, 95);
 }
 .buttons {
