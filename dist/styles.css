@@ -1,9 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato&family=Roboto&display=swap");
+
 *::after,
 *::before,
 body {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: "Lato", sans-serif;
 }
 body {
   min-height: 100vh;
@@ -69,8 +72,12 @@ nav .generated-projects:hover #close {
 nav .fixed .project:hover,
 nav .generated-projects .project:hover,
 .project.add:hover,
-button.task:hover {
+.task:hover {
   background-color: rgb(0, 0, 0, 0.2);
+}
+.taskButtons {
+  display: flex;
+  gap: 5px;
 }
 .project:focus:not(.add) {
   background-color: rgb(0, 0, 0, 0.2);
@@ -79,7 +86,7 @@ button.task:hover {
   margin-left: auto;
 }
 .addProject #projectTitle {
-  width: 180px;
+  width: 200px;
   height: 30px;
   margin: 0 10px 10px 10px;
   border: 1px solid black;
@@ -90,13 +97,37 @@ button.task:hover {
   display: none;
   margin-bottom: 20px;
 }
+.addProject input {
+  margin-right: auto;
+}
 .addProject.active {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .projectBtns {
   display: flex;
   justify-content: center;
   gap: 5px;
+}
+.taskButtons {
+  display: flex;
+  padding: 0;
+}
+
+.duedate {
+  margin-left: auto;
+  font-size: 20px;
+  white-space: nowrap;
+}
+.taskButtons button:hover {
+  text-decoration: underline;
+}
+.taskButtons button {
+  border-radius: 5px;
+  border: none;
+  background: transparent;
+  font-size: 20px;
 }
 main {
   display: flex !important;
@@ -142,15 +173,13 @@ main .project-header {
 .task-title {
   overflow: hidden;
 }
-.task-title.done {
+.task.done {
   text-decoration: line-through;
 }
 .task-title:hover {
   text-decoration: underline;
 }
-.task .duedate {
-  margin-left: auto;
-}
+
 .task input[type="checkbox"] {
   margin-left: 4px;
   margin-right: 5px;
@@ -178,7 +207,7 @@ main .project-header {
   transition: 200ms ease-in-out;
   border: 1px solid black;
   z-index: 10;
-  background-color: steelblue;
+  background-color: silver;
   width: 400px;
   height: 450px;
   border-radius: 10px;
@@ -254,7 +283,7 @@ textarea {
 }
 
 form label {
-  font-size: 24px;
+  font-size: 18px;
 }
 form .head {
   font-size: 36px;
@@ -262,4 +291,43 @@ form .head {
 }
 .head img:hover {
   opacity: 0.5;
+}
+
+/* checkbox styles from modern css site */
+input[type="checkbox"] {
+  /* Add if not using autoprefixer */
+  -webkit-appearance: none;
+  /* Remove most all native input styles */
+  appearance: none;
+  /* For iOS < 15 */
+  background-color: var(--form-background);
+  /* Not removed via appearance */
+  margin-top: 7px;
+
+  font: inherit;
+  color: currentColor;
+  width: 0.9em;
+  height: 0.9em;
+  border: 0.15em solid currentColor;
+  border-radius: 0.15em;
+  transform: translateY(-0.075em);
+  display: grid;
+  place-content: center;
+}
+
+input[type="checkbox"]::before {
+  content: "";
+  width: 0.6em;
+  height: 0.6em;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+  transform: scale(0);
+  transform-origin: bottom left;
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em var(--form-control-color);
+  /* Windows High Contrast Mode */
+  background-color: CanvasText;
+}
+
+input[type="checkbox"]:checked::before {
+  transform: scale(1);
 }

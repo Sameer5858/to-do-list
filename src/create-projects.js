@@ -1,7 +1,6 @@
 import { uuid, Task } from "./create-task";
 import isThisWeek from "date-fns/isThisWeek";
 import isToday from "date-fns/isToday";
-import subDays from "date-fns/subDays";
 
 export function Project(name, specialId) {
   let id;
@@ -47,7 +46,7 @@ export function Project(name, specialId) {
     getThisWeekTasks() {
       return state.tasks.filter((task) => {
         const taskDate = new Date(task.getDateFormatted);
-        return isThisWeek(subDays(taskDate, 1));
+        return isThisWeek(taskDate, { weekStartsOn: 1 });
       });
     },
     getTodayTasks() {

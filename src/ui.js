@@ -79,34 +79,37 @@ function loadTaskContent(projectId) {
     renderTaskContent(task);
   });
 }
+function openDetailTask() {
+  const projectId = titleDiv.getAttribute("data-project-id");
+  const taskId = titleDiv.getAttribute("data-task-id");
+  const project = toDoList.getProject(projectId);
+  const task = project.getTask(taskId);
+  modalTitle.value = task.title;
+  modalDescription.value = task.description;
+  modalDueDate.value = task.dueDate;
+  modalPriority.value = task.priority;
+  modalEditOff();
+  modalOpen();
+}
 function renderTaskContent(task) {
-  const button = document.createElement("button");
+  const div = document.createElement("div");
+  const taskButtonsDiv = document.createElement("div");
+  taskButtonsDiv.classList.add("taskButtons");
+  const detailsButton = document.createElement("button");
+  const editButton = document.createElement("button");
+  detailsButton.setAttribute("id", "taskDetails");
+  editButton.setAttribute("id", "editDetails");
+  detailsButton.textContent = "Details";
+  editButton.textContent = "Edit";
+  taskButtonsDiv.appendChild(editButton);
+  taskButtonsDiv.appendChild(detailsButton);
   const titleDiv = document.createElement("div");
-  titleDiv.addEventListener("click", () => {
+  div.classList.add(task.priority);
+  detailsButton.addEventListener("click", () => {
     const projectId = titleDiv.getAttribute("data-project-id");
     const taskId = titleDiv.getAttribute("data-task-id");
     const project = toDoList.getProject(projectId);
     const task = project.getTask(taskId);
-    const edit = document.getElementById("edit");
-    edit.addEventListener("click", () => {
-      modalEditOn();
-      modalSubmitAddTask.style.display = "none";
-      editSubmitTask.style.display = "block";
-      editSubmitTask.addEventListener("click", () => {
-        if (modalTitle.value) {
-          project.deleteTask(taskId);
-          addNewTask(
-            projectId,
-            modalTitle.value,
-            modalDueDate.value,
-            modalDescription.value,
-            modalPriority.value
-          );
-
-          modalClose();
-        }
-      });
-    });
     modalTitle.value = task.title;
     modalDescription.value = task.description;
     modalDueDate.value = task.dueDate;
@@ -114,7 +117,35 @@ function renderTaskContent(task) {
     modalEditOff();
     modalOpen();
   });
+  editButton.addEventListener("click", () => {
+    const projectId = titleDiv.getAttribute("data-project-id");
+    const taskId = titleDiv.getAttribute("data-task-id");
+    const project = toDoList.getProject(projectId);
+    const task = project.getTask(taskId);
+    modalTitle.value = task.title;
+    modalDescription.value = task.description;
+    modalDueDate.value = task.dueDate;
+    modalPriority.value = task.priority;
+    modalEditOff();
+    modalOpen();
+    modalEditOn();
+    modalSubmitAddTask.style.display = "none";
+    editSubmitTask.style.display = "block";
+    editSubmitTask.addEventListener("click", () => {
+      if (modalTitle.value) {
+        project.deleteTask(taskId);
+        addNewTask(
+          projectId,
+          modalTitle.value,
+          modalDueDate.value,
+          modalDescription.value,
+          modalPriority.value
+        );
 
+        modalClose();
+      }
+    });
+  });
   const dateDiv = document.createElement("div");
   const close = document.createElement("img");
   close.addEventListener("click", (e) => {
@@ -123,27 +154,33 @@ function renderTaskContent(task) {
     deleteTask(projectId, taskId);
   });
   const checkbox = document.createElement("input");
+  if (task.status) {
+    div.classList.add("done");
+    checkbox.checked = true;
+  }
   checkbox.addEventListener("click", () => {
     if (checkbox.checked) {
-      titleDiv.classList.add("done");
-      task.status = true;
+      div.classList.add("done");
+      task.toggleStatus();
+      UpdateStorage();
     } else {
-      titleDiv.classList.remove("done");
-      task.status = false;
+      div.classList.remove("done");
+      task.toggleStatus();
+      UpdateStorage();
     }
   });
   close.setAttribute("id", "close");
-  button.setAttribute("data-task-id", `${task.id}`);
+  div.setAttribute("data-task-id", `${task.id}`);
   titleDiv.setAttribute("data-task-id", `${task.id}`);
   dateDiv.setAttribute("data-task-id", `${task.id}`);
   close.setAttribute("data-task-id", `${task.id}`);
   checkbox.setAttribute("data-task-id", `${task.id}`);
-  button.setAttribute("data-project-id", `${task.projectId}`);
+  div.setAttribute("data-project-id", `${task.projectId}`);
   titleDiv.setAttribute("data-project-id", `${task.projectId}`);
   dateDiv.setAttribute("data-project-id", `${task.projectId}`);
   close.setAttribute("data-project-id", `${task.projectId}`);
   checkbox.setAttribute("date-project-id", `${task.projectId}`);
-  button.classList.add("task");
+  div.classList.add("task");
   titleDiv.classList.add("task-title");
   titleDiv.textContent = `${task.title}`;
   if (task.status) {
@@ -154,11 +191,12 @@ function renderTaskContent(task) {
   close.src = "./icons/close.svg";
   checkbox.setAttribute("type", "checkbox");
   checkbox.setAttribute("id", "taskstatus");
-  button.appendChild(checkbox);
-  button.appendChild(titleDiv);
-  button.appendChild(dateDiv);
-  button.appendChild(close);
-  taskContentContainer.appendChild(button);
+  div.appendChild(checkbox);
+  div.appendChild(titleDiv);
+  div.appendChild(dateDiv);
+  div.appendChild(taskButtonsDiv);
+  div.appendChild(close);
+  taskContentContainer.appendChild(div);
 }
 
 function addNewProject(name) {

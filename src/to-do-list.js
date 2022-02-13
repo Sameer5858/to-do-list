@@ -10,8 +10,11 @@ export const ToDoList = (function () {
     get projects() {
       return [...state.projects];
     },
-    addProject(value) {
-      state.projects.push(Project(value));
+    set projects(value) {
+      state.projects = value;
+    },
+    addProject(value, specialId) {
+      state.projects.push(Project(value, specialId));
     },
     getProject(value) {
       return state.projects.find((project) => project.id === value);

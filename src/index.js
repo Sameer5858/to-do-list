@@ -5,17 +5,48 @@ import {
   modalClose,
   modalOpen,
   loadTaskContent,
-  loadProjectNav,
+  loadProjectsNav,
 } from "./ui";
 export let toDoList = ToDoList;
+// localStorage.removeItem("toDoList");
 if (localStorage.getItem("toDoList")) {
   let stringify = localStorage.getItem("toDoList");
   let parse = JSON.parse(stringify);
-  let toDoList = Object.assign(parse, ToDoList);
-} else {
-  toDoList = ToDoList;
+  parse.projects.forEach((project) => {
+    if (project.id === "inbox") {
+      project.tasks.forEach((task) => {
+        const projectInToDo = toDoList.getProject(task.projectId);
+        projectInToDo.addTask(
+          task.title,
+          task.dueDate,
+          task.description,
+          task.priority,
+          task.status
+        );
+      });
+      return;
+    }
+    if (project.id === "today" || project.id === "week") {
+      return;
+    } else {
+      toDoList.addProject(project.name, project.id);
+    }
+    project.tasks.forEach((task) => {
+      const projectInToDo = toDoList.getProject(task.projectId);
+      projectInToDo.addTask(
+        task.title,
+        task.dueDate,
+        task.description,
+        task.priority,
+        task.status
+      );
+    });
+  });
+  toDoList.weekTask();
+  toDoList.todayTask();
+  loadProjectsNav();
+  loadTaskContent("inbox");
 }
-
 const addTaskBtn = document.getElementById("addTask");
 const addProjectButton = document.getElementById("addProject");
 const newProject = document.getElementById("newProject");

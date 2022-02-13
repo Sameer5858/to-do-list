@@ -44,8 +44,10 @@ export function Task(projectId, title, dueDate, description, priority, status) {
     get status() {
       return state.status;
     },
-    set status(value) {
-      state.status = value;
+    toggleStatus() {
+      if (state.status) {
+        state.status = false;
+      } else state.status = true;
     },
     get getDateFormatted() {
       const day = state.dueDate.split("-")[2];
