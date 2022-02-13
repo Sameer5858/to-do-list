@@ -46,6 +46,8 @@ if (localStorage.getItem("toDoList")) {
   toDoList.todayTask();
   loadProjectsNav();
   loadTaskContent("inbox");
+} else {
+  loadTaskContent("inbox");
 }
 const addTaskBtn = document.getElementById("addTask");
 const addProjectButton = document.getElementById("addProject");

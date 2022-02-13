@@ -151,6 +151,7 @@ main .project-header {
   display: flex;
   flex-direction: column;
   margin: 0 40px;
+  gap: 5px;
 }
 .add.task {
   margin-left: 40px;
@@ -169,6 +170,15 @@ main .project-header {
   border: none;
   border-radius: 5px;
   font-size: 24px;
+}
+.Low {
+  border-left: 5px green solid !important;
+}
+.Medium {
+  border-left: 5px orange solid !important;
+}
+.High {
+  border-left: 5px red solid !important;
 }
 .task-title {
   overflow: hidden;
