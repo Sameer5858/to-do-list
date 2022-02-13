@@ -14,11 +14,7 @@
     <nav>
       <div class="fixed">
         <button data-project-id="inbox" class="project fixedBtns">
-          <img
-            data-project-id="inbox"
-            src="./icons/inbox-multiple.svg"
-            alt=""
-          />Inbox</button
+          <img src="./icons/inbox-multiple.svg" alt="" />Inbox</button
         ><button data-project-id="today" class="project fixedBtns">
           <img src="./icons/calendar.svg" alt="" /> Today
         </button>
@@ -47,8 +43,8 @@
     </nav>
     <main>
       <div class="content-container">
-        <div data-project-id="inbox" class="project-header">Inbox</div>
-        <button data-project-id="inbox" id="addTask" class="task add">
+        <div class="project-header">Inbox</div>
+        <button id="addTask" class="task add">
           <img src="./icons/plus.svg" alt="" /> Add Task
         </button>
         <div id="task-container" class="generated-tasks"></div>
@@ -56,9 +52,7 @@
     </main>
     <div id="task" class="modal">
       <form action="" onsubmit="return false">
-        <div class="head">
-          Task <img id="edit" src="./icons/pencil.svg" alt="" />
-        </div>
+        <div class="head">Task</div>
         <div>
           <label for="title">*Title:</label>
           <input required type="text" name="title" id="title" />
