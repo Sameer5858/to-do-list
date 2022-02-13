@@ -8,7 +8,6 @@ import {
   loadProjectsNav,
 } from "./ui";
 export let toDoList = ToDoList;
-// localStorage.removeItem("toDoList");
 if (localStorage.getItem("toDoList")) {
   let stringify = localStorage.getItem("toDoList");
   let parse = JSON.parse(stringify);
@@ -45,8 +44,6 @@ if (localStorage.getItem("toDoList")) {
   toDoList.weekTask();
   toDoList.todayTask();
   loadProjectsNav();
-  loadTaskContent("inbox");
-} else {
   loadTaskContent("inbox");
 }
 const addTaskBtn = document.getElementById("addTask");
