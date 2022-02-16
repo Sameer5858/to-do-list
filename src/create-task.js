@@ -1,3 +1,4 @@
+// factory function creating tasks
 export function Task(projectId, title, dueDate, description, priority, status) {
   const id = uuid();
   let state = {
@@ -13,6 +14,9 @@ export function Task(projectId, title, dueDate, description, priority, status) {
   return {
     get projectId() {
       return projectId;
+    },
+    set projectId(value) {
+      return (state.projectId = value);
     },
     get title() {
       return state.title;

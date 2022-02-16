@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Lato&family=Roboto&display=swap");
-
+/* global styles */
 *::after,
 *::before,
 body {
@@ -8,11 +8,14 @@ body {
   padding: 0;
   font-family: "Lato", sans-serif;
 }
+/* body styles */
 body {
   min-height: 100vh;
+  min-width: 100vw;
   display: grid;
-  grid-template: 100px 6fr/ 250px 3fr;
+  grid-template: 100px 6fr/250px 8fr;
 }
+/* header styles */
 header {
   grid-area: 1/1/2/-1;
   font-size: 50px;
@@ -26,6 +29,7 @@ header {
 header img {
   height: 50%;
 }
+/* nav & project styles */
 nav {
   background-color: #ddd;
   padding: 20px;
@@ -58,10 +62,11 @@ nav .generated-projects .project,
   font-size: 20px;
 }
 
-.text {
+nav .text {
   overflow: hidden;
   white-space: nowrap;
 }
+
 nav .generated-projects #close {
   display: none;
   margin-left: auto;
@@ -74,10 +79,6 @@ nav .generated-projects .project:hover,
 .project.add:hover,
 .task:hover {
   background-color: rgb(0, 0, 0, 0.2);
-}
-.taskButtons {
-  display: flex;
-  gap: 5px;
 }
 .project:focus:not(.add) {
   background-color: rgb(0, 0, 0, 0.2);
@@ -110,35 +111,18 @@ nav .generated-projects .project:hover,
   justify-content: center;
   gap: 5px;
 }
-.taskButtons {
-  display: flex;
-  padding: 0;
-}
 
-.duedate {
-  margin-left: auto;
-  font-size: 20px;
-  white-space: nowrap;
-}
-.taskButtons button:hover {
-  text-decoration: underline;
-}
-.taskButtons button {
-  border-radius: 5px;
-  border: none;
-  background: transparent;
-  font-size: 20px;
-}
+/* main & Task styles */
 main {
   display: flex !important;
   justify-content: center;
   align-content: center;
   background-color: #eee;
-  max-width: calc(100vw - 250px);
+  min-width: calc(100vw - 250px);
 }
 .content-container {
   flex: 1;
-  max-width: calc(100vw - 250px);
+  min-width: calc(100vw - 250px);
 }
 main .project-header {
   font-size: 30px;
@@ -150,6 +134,7 @@ main .project-header {
   margin: 10px;
   display: flex;
   flex-direction: column;
+
   margin: 0 40px;
   gap: 5px;
 }
@@ -170,6 +155,30 @@ main .project-header {
   border: none;
   border-radius: 5px;
   font-size: 24px;
+}
+.taskButtons {
+  display: flex;
+  gap: 5px;
+}
+
+.taskButtons {
+  display: flex;
+  padding: 0;
+}
+
+.duedate {
+  margin-left: auto;
+  font-size: 20px;
+  white-space: nowrap;
+}
+.taskButtons button:hover {
+  text-decoration: underline;
+}
+.taskButtons button {
+  border-radius: 5px;
+  border: none;
+  background: transparent;
+  font-size: 20px;
 }
 .Low {
   border-left: 5px green solid !important;
@@ -194,6 +203,7 @@ main .project-header {
   margin-left: 4px;
   margin-right: 5px;
 }
+/* overlay styles */
 #overlay {
   position: fixed;
   transition: 200ms ease-in-out;
@@ -209,6 +219,7 @@ main .project-header {
   opacity: 1;
   pointer-events: all;
 }
+/* modal styles */
 .modal {
   position: fixed;
   top: 50%;
@@ -225,7 +236,7 @@ main .project-header {
 .modal.active {
   transform: translate(-50%, -50%) scale(1);
 }
-
+/* form styles */
 form {
   display: flex;
   flex-direction: column;
@@ -303,7 +314,7 @@ form .head {
   opacity: 0.5;
 }
 
-/* checkbox styles from modern css site */
+/* checkbox styles library from modern css site */
 input[type="checkbox"] {
   /* Add if not using autoprefixer */
   -webkit-appearance: none;

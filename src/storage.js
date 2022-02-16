@@ -1,5 +1,5 @@
 import { toDoList } from ".";
-
+// function to check if storage available in localStorage
 function storageAvailable(type) {
   let storage;
   try {
@@ -26,6 +26,7 @@ function storageAvailable(type) {
     );
   }
 }
+// function for upgrading localStorage if space available
 function UpdateStorage() {
   if (storageAvailable("localStorage")) {
     let stringify = JSON.stringify(toDoList);

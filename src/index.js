@@ -8,6 +8,7 @@ import {
   loadProjectsNav,
 } from "./ui";
 export let toDoList = ToDoList;
+// check if toToList exists in localstorage and assign the properties from it to the ToDoList IFFY
 if (localStorage.getItem("toDoList")) {
   let stringify = localStorage.getItem("toDoList");
   let parse = JSON.parse(stringify);
@@ -58,6 +59,7 @@ const modalDescription = document.getElementById("description");
 const modalDueDate = document.getElementById("dueDate");
 const modalPriority = document.getElementById("priority");
 const fixedProjectButtons = document.querySelectorAll(".fixedBtns");
+// event listener for add project button
 addProjectButton.addEventListener("click", () => {
   newProject.classList.add("active");
   const projectSubmitButton = document.getElementById("projectSubmit");
@@ -77,19 +79,13 @@ addProjectButton.addEventListener("click", () => {
     }
   });
 });
+//event listener for modal to cancel task
 modalCancelTask.addEventListener("click", () => {
   modalClose();
   modalSubmitAddTask.style.display = "block";
   editSubmitTask.style.display = "none";
 });
-fixedProjectButtons.forEach((btn) => {
-  btn.addEventListener("click", (e) => {
-    const projectId = e.target.getAttribute("data-project-id");
-    addTaskBtn.setAttribute("data-project-id", projectId);
-    loadTaskContent(projectId);
-    newProject.classList.remove("active");
-  });
-});
+//event listener for modal to for submit new task addition
 modalSubmitAddTask.addEventListener("click", (e) => {
   const projectId = addTaskBtn.getAttribute("data-project-id");
 
@@ -105,9 +101,22 @@ modalSubmitAddTask.addEventListener("click", (e) => {
     modalClose();
   }
 });
+// event listener for fixed project buttons like inbox, today and this week
+fixedProjectButtons.forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+    const projectId = e.target.getAttribute("data-project-id");
+    addTaskBtn.setAttribute("data-project-id", projectId);
+    loadTaskContent(projectId);
+    newProject.classList.remove("active");
+  });
+});
+// event listener for add task button, opens modal
 addTaskBtn.addEventListener("click", (e) => {
   modalOpen();
+
+  modalSubmitAddTask.disabled = false;
 });
+// event listener for closing the modal on click on the overlay
 overlay.addEventListener("click", () => {
   modalClose();
   modalSubmitAddTask.style.display = "block";

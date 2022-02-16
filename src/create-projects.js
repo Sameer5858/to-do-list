@@ -1,7 +1,7 @@
 import { uuid, Task } from "./create-task";
 import isThisWeek from "date-fns/isThisWeek";
 import isToday from "date-fns/isToday";
-
+// factory function for creating projects
 export function Project(name, specialId) {
   let id;
   if (specialId) {

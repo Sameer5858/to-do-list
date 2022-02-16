@@ -13,11 +13,23 @@ const modalTitle = document.getElementById("title");
 const modalDescription = document.getElementById("description");
 const modalDueDate = document.getElementById("dueDate");
 const modalPriority = document.getElementById("priority");
-
+// event listener for edit submit task button to edit the tasks
+editSubmitTask.addEventListener("click", (e) => {
+  let project = toDoList.getProject(e.target.getAttribute("data-project-id"));
+  let task = project.getTask(e.target.getAttribute("data-task-id"));
+  task.title = modalTitle.value;
+  task.description = modalDescription.value;
+  task.dueDate = modalDueDate.value;
+  task.priority = modalPriority.value;
+  modalClose();
+  UpdateStorage();
+  loadTaskContent(task.projectId);
+});
+// function to open modal
 function modalOpen() {
   modal.classList.add("active");
   overlay.classList.add("active");
-}
+} // function to close modal
 function modalClose() {
   modal.classList.remove("active");
   overlay.classList.remove("active");
@@ -29,21 +41,22 @@ function modalClose() {
   editSubmitTask.style.display = "none";
   modalEditOn();
 }
+// function to change modal form to be edited
 function modalEditOn() {
   modalTitle.disabled = false;
   modalDescription.disabled = false;
   modalDueDate.disabled = false;
   modalPriority.disabled = false;
-  modalSubmitAddTask.disabled = false;
-}
+  modalSubmitAddTask.disabled = true;
+} // function to change modal form to be disabled
 function modalEditOff() {
   modalTitle.disabled = true;
   modalDescription.disabled = true;
   modalDueDate.disabled = true;
   modalPriority.disabled = true;
-  modalSubmitAddTask.disabled = true;
+  modalSubmitAddTask.disabled = false;
 }
-
+//function to delete task from the toDoList and update on the local storage and load tasks
 function deleteTask(projectId, taskId) {
   const project = toDoList.getProject(projectId);
   project.deleteTask(taskId);
@@ -52,12 +65,15 @@ function deleteTask(projectId, taskId) {
   loadTaskContent(projectId);
   UpdateStorage();
 }
+
+//function to delete project from the toDoList and update on the local storage and load projects
 function deleteProject(projectId) {
   toDoList.deleteProject(projectId);
   projectNavContainer.innerHTML = "";
   loadProjectsNav();
   UpdateStorage();
 }
+//function to add a new task, update the local storage and render
 function addNewTask(projectId, ...details) {
   taskContentContainer.innerHTML = "";
   const project = toDoList.getProject(projectId);
@@ -67,6 +83,7 @@ function addNewTask(projectId, ...details) {
   loadTaskContent(projectId);
   UpdateStorage();
 }
+// function for loading project from toDoList
 function loadTaskContent(projectId) {
   const project = toDoList.getProject(projectId);
   if (!project) {
@@ -79,18 +96,7 @@ function loadTaskContent(projectId) {
     renderTaskContent(task);
   });
 }
-function openDetailTask() {
-  const projectId = titleDiv.getAttribute("data-project-id");
-  const taskId = titleDiv.getAttribute("data-task-id");
-  const project = toDoList.getProject(projectId);
-  const task = project.getTask(taskId);
-  modalTitle.value = task.title;
-  modalDescription.value = task.description;
-  modalDueDate.value = task.dueDate;
-  modalPriority.value = task.priority;
-  modalEditOff();
-  modalOpen();
-}
+// function for rendering task
 function renderTaskContent(task) {
   const div = document.createElement("div");
   const taskButtonsDiv = document.createElement("div");
@@ -105,6 +111,7 @@ function renderTaskContent(task) {
   taskButtonsDiv.appendChild(detailsButton);
   const titleDiv = document.createElement("div");
   div.classList.add(task.priority);
+  // event listener for details button on the task div
   detailsButton.addEventListener("click", () => {
     const projectId = titleDiv.getAttribute("data-project-id");
     const taskId = titleDiv.getAttribute("data-task-id");
@@ -116,38 +123,28 @@ function renderTaskContent(task) {
     modalPriority.value = task.priority;
     modalEditOff();
     modalOpen();
+    modalSubmitAddTask.style.display = "none";
   });
-  editButton.addEventListener("click", () => {
-    const projectId = titleDiv.getAttribute("data-project-id");
-    const taskId = titleDiv.getAttribute("data-task-id");
-    const project = toDoList.getProject(projectId);
-    const task = project.getTask(taskId);
+  editButton.setAttribute("data-task-id", `${task.id}`);
+  editButton.setAttribute("data-project-id", `${task.projectId}`);
+  // event listener for edit button on the task div
+  editButton.addEventListener("click", (e) => {
+    let projectId = e.target.getAttribute("data-project-id");
+    let taskId = e.target.getAttribute("data-task-id");
     modalTitle.value = task.title;
     modalDescription.value = task.description;
     modalDueDate.value = task.dueDate;
     modalPriority.value = task.priority;
-    modalEditOff();
     modalOpen();
     modalEditOn();
     modalSubmitAddTask.style.display = "none";
     editSubmitTask.style.display = "block";
-    editSubmitTask.addEventListener("click", () => {
-      if (modalTitle.value) {
-        project.deleteTask(taskId);
-        addNewTask(
-          projectId,
-          modalTitle.value,
-          modalDueDate.value,
-          modalDescription.value,
-          modalPriority.value
-        );
-
-        modalClose();
-      }
-    });
+    editSubmitTask.setAttribute("data-task-id", taskId);
+    editSubmitTask.setAttribute("data-project-id", projectId);
   });
   const dateDiv = document.createElement("div");
   const close = document.createElement("img");
+  // event listener for close icon on the task div
   close.addEventListener("click", (e) => {
     const projectId = e.target.getAttribute("data-project-id");
     const taskId = e.target.getAttribute("data-task-id");
@@ -158,6 +155,7 @@ function renderTaskContent(task) {
     div.classList.add("done");
     checkbox.checked = true;
   }
+  // event listener for checkbox on the task div to mark task completed or not
   checkbox.addEventListener("click", () => {
     if (checkbox.checked) {
       div.classList.add("done");
@@ -198,18 +196,20 @@ function renderTaskContent(task) {
   div.appendChild(close);
   taskContentContainer.appendChild(div);
 }
-
+// function to add project to toDoList and update the local storage
 function addNewProject(name) {
   projectNavContainer.innerHTML = "";
   toDoList.addProject(name);
   loadProjectsNav();
   UpdateStorage();
 }
+// function to load all projects in toDoList and display them on nav
 function loadProjectsNav() {
   toDoList.projects.forEach((project) => {
     renderProjectNav(project);
   });
 }
+// function to make a nav project item from the project in toDoList
 function renderProjectNav(project) {
   if (project.id === "inbox" || project.id === "today" || project.id === "week")
     return;
@@ -218,12 +218,14 @@ function renderProjectNav(project) {
     const text = document.createElement("div");
     const img = document.createElement("img");
     const close = document.createElement("img");
+    // event listener for close icon on the project button to close the project
     close.addEventListener("click", (e) => {
       const projectId = e.target.getAttribute("data-project-id");
       deleteProject(projectId);
       loadTaskContent("inbox");
       addTaskBtn.setAttribute("data-project-id", "inbox");
     });
+    // event listener for the project button to load project on click
     button.addEventListener("click", (e) => {
       const projectId = e.target.getAttribute("data-project-id");
       if (toDoList.getProject(projectId)) {
